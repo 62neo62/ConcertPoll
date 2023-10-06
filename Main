@@ -1,0 +1,48 @@
+def get_tracks(Artist, EventID):
+    # Prompt the user to enter a list of strings separated by commas
+    User_Input_TrackList = input(f"Enter a list of strings for {Artist}'s tracks (separated by commas with no space): ")
+
+    # Split the user input by commas to create a list of strings
+    tracks = User_Input_TrackList.split(',')
+
+    # Trim whitespace from each string and remove leading/trailing spaces
+    tracks = [track.strip() for track in tracks]
+
+    # Prompt the user to enter the number of tracks they want to vote for
+    count = int(input(f"How many songs will  {Artist} be performing? "))
+
+    # Optionally, you can print the tracks for verification
+    print(f"{Artist}'s tracks: {tracks} for event {EventID}")
+
+    # Return the list of tracks and the count
+    return tracks, count
+
+def Poll(tracks, Artist, count, Event):
+    # Ensure the count is not greater than the number of available tracks
+    count = min(count, len(tracks))
+
+    # Initialize a list to store the user's selected tracks
+    selected_tracks = []
+
+    # Prompt the user to vote for tracks
+    print(f"Please select {count} tracks for {Event} by {Artist}:")
+    for i in range(count):
+        while True:
+            track = input(f"Enter track {i + 1} (choose from {', '.join(tracks)}): ")
+            if track in tracks and track not in selected_tracks:
+                selected_tracks.append(track)
+                break
+            else:
+                print("Invalid track or track already selected. Please choose a different track.")
+
+    # Print the selected tracks
+    print(f"You have selected the following tracks for {Event} by {Artist}:")
+    for track in selected_tracks:
+        print(track)
+
+# Example usage:
+Artist = input("Enter the name of the performing artist: ")
+EventID = input("Enter the name of the event: ")
+tracks, count = get_tracks(Artist, EventID)
+Event = "Some Event"
+Poll(tracks, Artist, count, EventID)
